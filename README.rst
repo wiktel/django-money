@@ -1,14 +1,6 @@
 django-money
 ============
 
-.. image:: https://github.com/django-money/django-money/workflows/CI/badge.svg
-   :target: https://github.com/django-money/django-money/actions
-   :alt: Build Status
-
-.. image:: http://codecov.io/github/django-money/django-money/coverage.svg?branch=main
-   :target: http://codecov.io/github/django-money/django-money?branch=main
-   :alt: Coverage Status
-
 .. image:: https://readthedocs.org/projects/django-money/badge/?version=latest
    :target: http://django-money.readthedocs.io/en/latest/
    :alt: Documentation Status

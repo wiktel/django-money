@@ -1,40 +1,47 @@
-name: CI
+name: Run for the money
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  pre-commit:
-    name: Generic pre-commit checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - uses: astral-sh/setup-uv@v5
-      - run: uv pip install --system pre-commit pre-commit-uv
-      - run: pre-commit run --all-files
 
-  docs:
-    name: docs
-    runs-on: ubuntu-latest
+  pre-commit:
+    name: Pre-commit linting
+    runs-on: debian
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - uses: astral-sh/setup-uv@v5
-      - run: uv pip install --system tox tox-uv
-      - name: Run docs tox job
-        run: tox -e docs
+      -
+          name: Setup Python
+          run: apt update && apt install -y python3 python3-pip gettext
+      -
+          run: pip install pre-commit
+          shell: bash
+      -
+          uses: actions/cache@v4
+          with:
+            path: ~/.cache/pre-commit
+            key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+            restore-keys: |
+              ${{ runner.os }}-pre-commit-
+      -
+          uses: actions/cache@v4
+          with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
+      -
+          run: pre-commit run --show-diff-on-failure --color=always --all-files
+          shell: bash
 
   tests:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
           - python: '3.10'
@@ -67,26 +74,29 @@ jobs:
             tox_env: django_main-py313
     name: ${{ matrix.tox_env }}
     runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/catthehacker/ubuntu:act-22.04"
+      volumes:
+        - /opt/hostedtoolcache:/opt/hostedtoolcache
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
+      # Goal: We need to somehow cache both pip/uv and the Python setup
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache
+          key: ${{ matrix.tox_env }}-tests
+
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
 
-      - uses: astral-sh/setup-uv@v5
-
-      - run: uv pip install --system tox tox-uv coverage
+      - run: pip install tox tox-uv coverage uv
 
       - name: Run ${{ matrix.tox_env }} tox job
         run: tox -e ${{ matrix.tox_env }}
 
       - run: coverage xml -i
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          name: codecov-py${{ matrix.python }}
