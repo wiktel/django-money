@@ -3,6 +3,7 @@ Created on May 7, 2011
 
 @author: jake
 """
+from djmoney.forms import HiddenMoneyWidget
 
 import warnings
 from decimal import Decimal
@@ -270,3 +271,8 @@ def test_precedence_decimal_places_model_form():
     decimal_places = PreciseModelForm.Meta.model._meta.fields[2].decimal_places
     expected = str(10**-decimal_places)
     assert PreciseModelForm().fields["money"].widget.widgets[0].attrs["step"] == expected
+
+
+def test_hidden_widget_argkwargs():
+    widget = MoneyForm().fields["money"].hidden_widget(attrs={"attribute": "something"})
+    assert widget.attrs["attribute"] == "something"
