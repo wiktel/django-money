@@ -62,7 +62,7 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/django-money/django-money"
+Homepage = "https://codeberg.org/django-money/django-money"
 
 [tool.setuptools.dynamic]
 version = { attr = "djmoney.__version__" }
