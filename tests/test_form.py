@@ -3,7 +3,6 @@ Created on May 7, 2011
 
 @author: jake
 """
-from djmoney.forms import HiddenMoneyWidget
 
 import warnings
 from decimal import Decimal
