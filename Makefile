@@ -28,14 +28,14 @@ clean-test:
 	rm -fr htmlcov/
 
 test:
-	pytest --cov=./djmoney tests
+	uv run --group test --extra exchange pytest --cov=./djmoney tests
 
 coverage: test
 	coverage report -m
 	coverage html
 
 install: clean
-	uv sync
+	uv sync --group test --extra exchange
 
 release: dist  ## Generate and upload release to PyPi
 	uv publish
