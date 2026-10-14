@@ -901,7 +901,7 @@ wrapping with ``money_manager``.
 - Initial public release
 
 .. _Unreleased: https://codeberg.org/django-money/django-money/compare/3.6.1...HEAD
-.. _3.6.1: https://codeberg.org/django-money/django-money/compare/3.6.1...3.6.2
+.. _3.6.2: https://codeberg.org/django-money/django-money/compare/3.6.1...3.6.2
 .. _3.6.1: https://codeberg.org/django-money/django-money/compare/3.6...3.6.1
 .. _3.6: https://codeberg.org/django-money/django-money/compare/3.5.4...3.6
 .. _3.5.4: https://codeberg.org/django-money/django-money/compare/3.5.4...3.5.3
