@@ -26,6 +26,8 @@ from djmoney import __version__
 
 
 extlinks = {
+    "codeberg-issue": ("https://codeberg.org/django-money/django-money/issues/%s", "#%s"),
+    "codeberg-user": ("https://codeberg.org/%s", "@%s:codeberg.com"),
     "github-issue": ("https://github.com/django-money/django-money/issues/%s", "#%s"),
     "github-user": ("https://github.com/%s", "@%s:github.com"),
 }
