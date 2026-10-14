@@ -2,10 +2,16 @@ Changelog
 =========
 
 
-`Unreleased`_
--------------
+`3.6.2`_ - 2026-10-14
+---------------------
 
-...
+**Changed**
+
+- Pass arg/kwargs through hidden_widget to the HiddenMoneyWidget :codeberg-issue:`825` (:codeberg-user:`andyandyandy`)
+
+**Other**
+
+- Project migrated to Codeberg w/ Forgejo Actions Runner
 
 `3.6.1`_ - 2026-06-07
 ---------------------
